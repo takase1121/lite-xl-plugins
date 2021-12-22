@@ -13,12 +13,10 @@ jobs:
         with:
           node-version: 14
       - name: run the script
-        id: run-script
         run: |
           cd scripts
           npm install
-          output="$(npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md)"
-          echo "::set-output name=script::$output"
+          npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md
       - name: create PR
         uses: peter-evans/create-pull-request@v3
         with:
@@ -27,4 +25,8 @@ jobs:
           add-paths: README.md
           delete-branch: false
           title: '[CI] Reorganize README.md'
-          body: ${{ steps.run-script.outputs.script }}
+          body: |
+            This is a CI that makes sure entries are in alphabetical order and no links are invalid.
+            Please check the [CI run][1] for logs.
+
+            [1]: https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
