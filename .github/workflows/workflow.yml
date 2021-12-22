@@ -13,12 +13,12 @@ jobs:
         with:
           node-version: 14
       - name: run the script
-        id: run_script
+        id: run-script
         run: |
           cd scripts
           npm install
-          npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md > output
-          echo "::set-output name=script::$(cat output)"
+          output="$(npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md)"
+          echo "::set-output name=script::$output"
       - name: create PR
         uses: peter-evans/create-pull-request@v3
         with:
@@ -32,4 +32,4 @@ jobs:
 
             Output from script:
             ```
-            ${{ steps.run_script.outputs.script }}
+            ${{ steps.run-script.outputs.script }}
