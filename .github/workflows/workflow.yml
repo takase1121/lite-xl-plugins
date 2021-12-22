@@ -16,7 +16,7 @@ jobs:
         run: |
           cd scripts
           npm install
-          npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}" ../README.md ../README.md
+          npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md
       - uses: actions/upload-artifact@v2
         with:
           name: readme
