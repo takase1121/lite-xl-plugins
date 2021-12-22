@@ -17,7 +17,26 @@ jobs:
           cd scripts
           npm install
           npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md
-      - uses: actions/upload-artifact@v2
+          #      - name: Check if 'reorganize-ci' exists
+          #        run: |
+          #          if git show-ref --quiet refs/heads/reorganize-ci; then
+          #            echo "::set-env name=has_branch::true"
+          #          else
+          #            echo "::set-env name=has_branch::false"
+          #          fi
+      - name: create PR
+        # if: ${{ env.has_branch == 'false' }}
+        uses: peter-evans/create-pull-request@v3
         with:
-          name: readme
-          path: README.md
+          token: ${{ secrets.PAT }}
+          commit-message: Reorganize README.md
+          commiter: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: reorganize-ci
+          delete-branch: false
+          title: '[CI] Reorganize README.md'
+          body: |
+            This is a CI that makes sure entries are in alphabetical order and no links are invalid.
+          labels: automated pr
+          draft: false
