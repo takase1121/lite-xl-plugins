@@ -12,7 +12,12 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 14
-      - run: |
+      - name: run the script
+        run: |
           cd scripts
           npm install
-          npm run main -- https://github.com/${{ github.event.repository.name }}/ README.md README.md
+          npm run main -- https://github.com/${{ github.repository }}/ ../README.md ../README.md
+      - uses: actions/upload-artifact@v2
+        with:
+          name: readme
+          path: README.md
