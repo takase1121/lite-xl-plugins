@@ -1,11 +1,13 @@
 name: Reorganize README
 
 on:
-  push:
-    branches-ignore: [reorganize-ci]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   reorganize:
+    if: github.ref != 'refs/heads/reorganize-ci'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -17,15 +19,7 @@ jobs:
           cd scripts
           npm install
           npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md
-          #      - name: Check if 'reorganize-ci' exists
-          #        run: |
-          #          if git show-ref --quiet refs/heads/reorganize-ci; then
-          #            echo "::set-env name=has_branch::true"
-          #          else
-          #            echo "::set-env name=has_branch::false"
-          #          fi
       - name: create PR
-        # if: ${{ env.has_branch == 'false' }}
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.PAT }}
