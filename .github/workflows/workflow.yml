@@ -30,13 +30,8 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           commit-message: Reorganize README.md
-          committer: GitHub <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          signoff: false
           branch: reorganize-ci
           delete-branch: false
           title: '[CI] Reorganize README.md'
           body: |
             This is a CI that makes sure entries are in alphabetical order and no links are invalid.
-          labels: automated pr
-          draft: false
