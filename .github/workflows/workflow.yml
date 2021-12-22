@@ -1,0 +1,18 @@
+name: Reorganize README
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  reorganize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: |
+          cd scripts
+          npm install
+          npm run main -- https://github.com/${{ github.event.repository.name }}/ README.md README.md
