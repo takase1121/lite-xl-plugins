@@ -2,7 +2,7 @@ name: Reorganize README
 
 on:
   push:
-    branches-ignore: [reorganize-ci]
+    branches: [master]
 
 jobs:
   reorganize:
@@ -13,10 +13,12 @@ jobs:
         with:
           node-version: 14
       - name: run the script
+        id: run_script
         run: |
           cd scripts
           npm install
-          npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md
+          npm run main -- "https://github.com/${{ github.repository }}/blob/${GITHUB_REF##*/}/" ../README.md ../README.md > output
+          echo "::set-output name=script::$(cat output)"
       - name: create PR
         uses: peter-evans/create-pull-request@v3
         with:
@@ -27,3 +29,7 @@ jobs:
           title: '[CI] Reorganize README.md'
           body: |
             This is a CI that makes sure entries are in alphabetical order and no links are invalid.
+
+            Output from script:
+            ```
+            ${{ steps.run_script.outputs.script }}
