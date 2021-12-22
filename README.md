@@ -8,6 +8,9 @@ to something other than a raw file it should be marked with an asterisk.*
 
 ***
 
+
+TESTING
+
 | Plugin                                                                                                         | Description                                                                                                                                                                                                                                                                                     |
 | -------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [`autoinsert`](plugins/autoinsert.lua?raw=1)                                                                   | Automatically inserts closing brackets and quotes. Also allows selected text to be wrapped with brackets or quotes.                                                                                                                                                                             |
