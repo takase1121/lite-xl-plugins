@@ -22,6 +22,7 @@ jobs:
         with:
           commit-message: Reorganize README.md
           branch: reorganize-ci
+          add-paths: README.md
           delete-branch: false
           title: '[CI] Reorganize README.md'
           body: |
